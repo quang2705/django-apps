@@ -23,7 +23,7 @@ from rango import views
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	# map the url starting with rango to 
-	# the rango app
+	# the rango app    
 	url(r'^rango/', include('rango.urls')),
     url(r'^admin/', admin.site.urls),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
