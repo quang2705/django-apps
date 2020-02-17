@@ -1,8 +1,8 @@
 from django import forms 
-from rango.models import Category, Page 
+from rango.models import Category, Page, str_max_length 
 
 class CategoryForm(forms.ModelForm):
-	name = forms.CharField(max_length=128, 
+	name = forms.CharField(max_length=str_max_length, 
 		help_text="Please enter the category name.")
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -10,17 +10,29 @@ class CategoryForm(forms.ModelForm):
 
 	#An inline class to provide additional information on the form 
 	class Meta: 
-		#Provide associate between ModelForm and model 
+		#Provide associate between  ModelForm and model 
 		model = Category 
 		fields = ('name',)
 
 class PageForm(forms.ModelForm):
-	title = forms.CharField(max_length=128,
+	title = forms.CharField(max_length=str_max_length,
 		help_text="Please enter the title of the page.")
 	url = forms.URLField(max_length=200, 
 		help_text="Please enter the URL of the page.")
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
+	def clean(self): 
+		cleaned_data = self.cleaned_data
+		url = cleaned_data.get('url')
+		# If url is not empty and doesn't start with 'http://', 
+		# then prepend 'http://'.
+		if url and not url.startswith('http://')\
+			and not url.startswith('https://'):
+			url = 'http://' + url
+			cleaned_data['url'] = url
+
+		return cleaned_data 
+	
 	class Meta: 
 		#Provide association between ModelForm and model 
 		model = Page
@@ -29,17 +41,7 @@ class PageForm(forms.ModelForm):
 		# fields = ('title', 'url', 'views')
 		exclude	= ('category',)
 
-	def clean(self): 
-		cleaned_data = self.cleaned_data
-		url = cleaned_data.get('url')
+	
 
-		# If url is not empty and doesn't start with 'http://', 
-		# then prepend 'http://'.
-		if url and not url.startswith('http://'):
-			url = 'http://' + url
-			cleaned_data['url'] = url
-
-			return cleaned_data 
-			
 
 
