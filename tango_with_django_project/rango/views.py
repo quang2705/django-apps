@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse 
+from django.http import HttpResponse, HttpResponseRedirect 
 from rango.models import Category
 from rango.models import Page
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
 
 def index(request): 
 	#Query the database for list of ALL categories currently stored
@@ -151,3 +153,39 @@ def register(request):
 
 	context_dict ={'user_form': user_form, 'profile_form':profile_form, 'registered': registered}
 	return render(request, 'rango/register.html', context_dict) 
+
+def user_login(request): 
+	#If the request if a HTTP POST, try to pull out the relevant information 
+	if request.method == "POST": 
+		#Gather the username and password provided by the users. 
+		#This information is obtained from the login form 
+		#user request.POST.get('<variable>') instead of request.POST['<variable>']
+		#because the later one result in KeyError
+
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+
+		#use Django machinary to see if username/password combination
+		#is valid - a user object is return of it is 
+		user = authenticate(username=username, password=password)
+
+		#if we have a user object, authenticate, 
+		#otherwise python returns None 
+		if user: 
+			# is the account activate
+			if user.is_active: 
+				#if the account is valid and active, we log user in
+				#send the user to the home page
+				login(request, user)
+				return HttpResponseRedirect(reverse('index'))
+			else:
+				return HttpResponse('Your Rango account is disabled')
+		else:
+			#Bad login details were provided. Can't log the user in 
+			print("Invalid login details: {0}, {1}".format(username, password))
+			return HttpResponse("Invalid login details supplied")
+	#The request is not a HTTP POST
+	else:
+		#no context variable to pass to system 
+		#return blank login page
+		return render(request, 'rango/login.html', {})
