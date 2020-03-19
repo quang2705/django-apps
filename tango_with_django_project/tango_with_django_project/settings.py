@@ -32,6 +32,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#If true, user can register
+REGISTRATION_OPEN = True
+
+#One-wwek activation window, you may, use different value
+ACCOUNT_ACTIVATION_DAYS = 7
+
+#If True, the user will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+
+#The page you want user to arrive at after they successfully login
+#and are trying to access pages requiring authentication
+LOGIN_URL = '/accounts/login/'
 
 # Application definition
 
@@ -42,7 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rango'
+    'rango',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -128,7 +141,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
 
-#django setting for media 
+#django setting for media
 
-MEDIA_ROOT = MEDIA_DIR 
+MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL  = '/media/'

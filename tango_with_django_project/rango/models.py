@@ -21,7 +21,7 @@ class Category(models.Model):
 		return self.name
 
 class Page(models.Model):
-	category = models.ForeignKey(Category)
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	title = models.CharField(max_length=str_max_length)
 	url = models.URLField()
 	views = models.IntegerField(default=0)
@@ -31,7 +31,7 @@ class Page(models.Model):
 
 class UserProfile(models.Model): 
 	#This line is required. Links UserProfile to a User model instance 
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 	#The additional attributes we wish to include 
 	website = models.URLField(blank=True)

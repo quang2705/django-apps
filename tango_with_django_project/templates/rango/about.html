@@ -6,6 +6,9 @@
 {% endblock %}
 {% block body_block %}
 	<p>RANGO says this is the about page</p>
+	{% if visits %}
+		<p>You have visited this page {{visits}} time</p>
+	{% endif%}
 	<div>
 		<img src="{{ MEDIA_URL }}cat.jpg" alt= "picture of a cat"/>
 		<br/>
