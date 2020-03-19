@@ -1,3 +1,45 @@
+<!-- <!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+
+<html>
+	<head>
+		<title>
+			Rango -
+			{% block title_block %}
+				How to Tango with Django!
+			{% endblock %}
+		</title>
+</head>
+	<body>
+		<div>
+			{% block sidebar_block %}
+				{% get_category_list category%}
+			{% endblock %}
+		</div>
+		<div>
+			{% block body_block %}
+			{% endblock %}
+		</div>
+		<hr/>
+		<div>
+			<ul>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'rango:add_category' %}">Add New Category</a></li>
+					<li><a href="{% url 'rango:restricted' %}">Restricted Page</a></li>
+					<li><a href="{% url 'auth_logout' %}">Logout</a></li>
+					<li><a href="{% url 'auth_password_change' %}">Change Password</a></li>
+				{% else %}
+					<li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+					<li><a href="{% url 'auth_login' %}?next=/rango/">Sign In</a></li>
+				{% endif %}
+					<li><a href="{% url 'rango:about' %}">About</a></li>
+					<li><a href="{% url 'rango:index' %}">Index</a></li>
+			</ul>
+		</div>
+	</body>
+</html> -->
+
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load rango_template_tags %}
@@ -18,54 +60,60 @@
     <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/3.3/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
 </head>
 
   <body>
     <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbar"
+              aria-controls="navbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
       </button>
       <a class="navbar-brand" href="{% url 'index' %}">Rango</a>
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'rango:index' %}">
+            <a class="nav-link" href="{% url 'index' %}">
               Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'rango:about' %}">
+            <a class="nav-link" href="{% url 'about' %}">
               About
             </a>
           </li>
           {% if user.is_authenticated %}
-	          <li class="nav-item">
-	            <a class="nav-link" href="{% url 'rango:restricted' %}">
-	              Restricted Page
-	            </a>
-	          </li>
-	          <li class="nav-item">
-	            <a class="nav-link" href="{% url 'rango:add_category' %}">
-	              Add a New Category
-	            </a>
-	          </li>
-	          <li class="nav-item">
-	            <a class="nav-link" href="{% url 'auth_logout' %}">
-	              Logout
-	            </a>
-	          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'restricted'% }">
+              Restricted Page
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_category'% }">
+              Add a New Category
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'auth_logout'% }">
+              Logout
+            </a>
+          </li>
           {%else%}
-	          <li class="nav-item">
-	            <a class="nav-link" href="{% url 'registration_register' %}">
-	              Register Here
-	            </a>
-	          </li>
-	          <li class="nav-item">
-	            <a class="nav-link" href="{% url 'auth_login' %}?next=/rango/ ">
-	              Login
-	            </a>
-	          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'registration_register'% }">
+              Register Here
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'auth_login'% }">
+              Login
+            </a>
+          </li>
           {%endif%}
           </ul>
       </div>
@@ -73,7 +121,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 hidden-xs-down sidebar">
+        <div class="col-sm-3 col-md-2 sidebar">
           {% block sidebar_block %}
             {% get_category_list category %}
           {% endblock %}
@@ -84,6 +132,7 @@
         </div>
       </div>
     </div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -93,5 +142,6 @@
     <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src=".http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
-</html>
+
+
+</body></html>

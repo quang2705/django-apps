@@ -6,7 +6,12 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>Login to Rango</h1>
+	<link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css"
+	rel="stylesheet">
+		<div class="jumbotron">
+			<h1 class="display-3">Login</h1>
+	</div>
+	
 	<form id="login_form" method="post" action="{% url 'rango:login' %}">
 		{% csrf_token %}
 		Username: <input type="text" name="username" value="" size="50" />

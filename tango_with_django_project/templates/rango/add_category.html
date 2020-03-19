@@ -6,9 +6,10 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>Add a Category</h1>
 	<div>
-		<form id="category_form" method="post" action="{% url 'rango:add_category' %}">
+		<form role="form" id="category_form" method="post"
+		action="{% url 'rango:add_category' %}">
+		<h2 class="form-signin-heading"> Add a Category</h2>
 			<!-- This is a cross site request forgery token, which helps to protect and secure POST request that is initiated on the subsquent submission of a form-->
 			{% csrf_token %}
 			{% for hidden in form.hidden_fields %}
@@ -16,10 +17,13 @@
 			{% endfor %}
 			{% for field in form.visible_fields %}
 				{{ field.errors }}
-				{{ field.help_text }}
-				{{ field }}
+				{{ field.help_text }}<br/>
+				{{ field }}<br/>
 			{% endfor %}
-			<input type="submit" name="submit" value="Create Category"/>
+			<button class="btn btn-primary"
+			type="submit" name="submit">
+			Create a Category
+			</button>
 		</form>
 	</div>
 {% endblock %}
